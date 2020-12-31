@@ -1,0 +1,46 @@
+# 开发环境配置
+spring:
+        profiles: dev
+        mqtt:
+                broker:
+                        # broker唯一标识
+                        id: mqtt-broker-1
+                        #是否启用SSL
+                        sslEnabled: true
+                        #是否启用用户验证
+                        userAuthEnabled: true
+                        #是否启用WebSocket
+                        websocketEnabled: true
+                        # SSL端口
+                        port: 8885
+                        # SSL密钥文件密码
+                        ssl-password: 123456
+                        # websocket端口
+                        websocket-port: 9995
+                        # websocket path 值
+                        websocket-path: /mqtt
+                        # 心跳时间(秒)
+                        keep-alive: 60
+                        #CONNECT超时检查
+                        tcpTimeout: 6
+                        # 开启Epoll模式, linux下建议开启
+                        use-epoll: false
+                        # 缓存存储方式 memory-本地存储 redis-Redis存储
+                        cache: redis
+        redis:
+                database: 0
+                host: localhost
+                port: 6379
+                password:      # 密码（默认为空）
+                timeout: 6000  # 连接超时时长（毫秒）
+                block-when-exhausted: true
+                jedis:
+                        pool:
+                                max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+                                max-wait: -1      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                                max-idle: 10      # 连接池中的最大空闲连接
+                                min-idle: 5       # 连接池中的最小空闲连接
+logging:
+        level:
+                root: info
+                cn.jasper.iot.mqtt: debug

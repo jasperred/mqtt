@@ -72,7 +72,7 @@ public class Connect {
 		//使用客户端的心跳时间
 		processIdle(channel, msg);
 		//确认连接请求
-		connaACK(channel, msg,sessionStore);
+		connACK(channel, msg,sessionStore);
 		//处理消息重发
 		processDUP(channel, msg);
 	}
@@ -97,7 +97,7 @@ public class Connect {
 		}
 	}
 
-	private void connaACK(Channel channel, MqttConnectMessage msg,SessionStore sessionStore) {
+	private void connACK(Channel channel, MqttConnectMessage msg, SessionStore sessionStore) {
 		// 至此存储会话信息及返回接受客户端连接
 		sessionStoreService.put(msg.payload().clientIdentifier(), sessionStore);
 		// 将clientId存储到channel的map中
@@ -144,7 +144,11 @@ public class Connect {
 			}
 			try {
 				//删除之前的Channel
-				channelCache.remove(sessionStore.getChannelId());
+				Channel oldChannel = channelCache.find(sessionStore.getChannelId());
+				if(oldChannel!=null){
+					oldChannel.close();
+					channelCache.remove(sessionStore.getChannelId());
+				}
 			} catch (Exception e) {
 				//e.printStackTrace();
 			}

@@ -10,7 +10,7 @@ spring:
                         #是否启用用户验证
                         userAuthEnabled: true
                         #是否启用WebSocket
-                        websocketEnabled: true
+                        websocketEnabled: false
                         # SSL端口
                         port: 8885
                         # SSL密钥文件密码
@@ -22,7 +22,7 @@ spring:
                         # 心跳时间(秒)
                         keep-alive: 60
                         #CONNECT超时检查
-                        tcpTimeout: 6
+                        tcpTimeout: 60
                         # 开启Epoll模式, linux下建议开启
                         use-epoll: false
                         # 缓存存储方式 memory-本地存储 redis-Redis存储

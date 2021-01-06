@@ -42,6 +42,6 @@ public class RetainMessageStoreService implements IRetainMessageStoreService {
 
     @Override
     public List<RetainMessageStore> search(String topicFilter) {
-        return retainMessageCache.all(topicFilter);
+        return retainMessageCache.search(topicFilter);
     }
 }

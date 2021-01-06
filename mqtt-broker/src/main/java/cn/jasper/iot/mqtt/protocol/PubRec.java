@@ -30,6 +30,9 @@ public class PubRec {
 	}
 
 	public void processPubRec(Channel channel, MqttMessageIdVariableHeader variableHeader) {
+		if(variableHeader==null){
+			return;
+		}
 		MqttMessage pubRelMessage = MqttMessageFactory.newMessage(
 			new MqttFixedHeader(MqttMessageType.PUBREL, false, MqttQoS.AT_MOST_ONCE, false, 0),
 			MqttMessageIdVariableHeader.from(variableHeader.messageId()), null);

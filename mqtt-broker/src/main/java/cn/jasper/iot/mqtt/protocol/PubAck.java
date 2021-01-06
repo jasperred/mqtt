@@ -29,6 +29,9 @@ public class PubAck {
 	}
 
 	public void processPubAck(Channel channel, MqttMessageIdVariableHeader variableHeader) {
+		if(variableHeader==null){
+			return;
+		}
 		int messageId = variableHeader.messageId();
 		LOGGER.debug("PUBACK - clientId: {}, messageId: {}", (String) channel.attr(AttributeKey.valueOf("clientId")).get(), messageId);
 		//收到ACK后丢弃发送消息

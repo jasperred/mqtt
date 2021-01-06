@@ -59,7 +59,7 @@ public class RedisUtils {
             jedis = jedisPool.getResource();
             jedis.select(indexdb);
             value = jedis.get(key);
-            LOGGER.info(value);
+            LOGGER.debug(value);
         } catch (Exception e) {
 
             LOGGER.error(e.getMessage());
@@ -2236,6 +2236,22 @@ public class RedisUtils {
     }
 
     public Set<String> keysBySelect(String pattern,int database) {
+        Jedis jedis = null;
+        Set<String> res = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.select(database);
+            res = jedis.keys(pattern);
+        } catch (Exception e) {
+
+            LOGGER.error(e.getMessage());
+        } finally {
+            returnResource(jedisPool, jedis);
+        }
+        return res;
+    }
+
+    public Set<String> keysBySelect(String pattern) {
         Jedis jedis = null;
         Set<String> res = null;
         try {

@@ -42,7 +42,7 @@ public class SubscribeNotWildcardCache {
         cacheService.remove(CACHE_CLIENT_PRE + clientId);
     }
     public List<SubscribeStore> all(String topic) {
-        List<String> rl = cacheService.search(topic);
+        List<String> rl = cacheService.search(CACHE_PRE + topic);
         if(rl==null||rl.size()==0){
             return null;
         }

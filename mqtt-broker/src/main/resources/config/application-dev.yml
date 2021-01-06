@@ -6,7 +6,7 @@ spring:
                         # broker唯一标识
                         id: mqtt-broker-1
                         #是否启用SSL
-                        sslEnabled: true
+                        sslEnabled: false
                         #是否启用用户验证
                         userAuthEnabled: true
                         #是否启用WebSocket

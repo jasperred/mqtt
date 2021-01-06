@@ -82,18 +82,22 @@ public class Connect {
 		if (!msg.variableHeader().isCleanSession()) {
 			List<DupPublishMessageStore> dupPublishMessageStoreList = dupPublishMessageStoreService.get(msg.payload().clientIdentifier());
 			List<DupPubRelMessageStore> dupPubRelMessageStoreList = dupPubRelMessageStoreService.get(msg.payload().clientIdentifier());
-			dupPublishMessageStoreList.forEach(dupPublishMessageStore -> {
-				MqttPublishMessage publishMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
-					new MqttFixedHeader(MqttMessageType.PUBLISH, true, MqttQoS.valueOf(dupPublishMessageStore.getMqttQoS()), false, 0),
-					new MqttPublishVariableHeader(dupPublishMessageStore.getTopic(), dupPublishMessageStore.getMessageId()), Unpooled.buffer().writeBytes(dupPublishMessageStore.getMessageBytes()));
-				channel.writeAndFlush(publishMessage);
-			});
-			dupPubRelMessageStoreList.forEach(dupPubRelMessageStore -> {
-				MqttMessage pubRelMessage = MqttMessageFactory.newMessage(
-					new MqttFixedHeader(MqttMessageType.PUBREL, true, MqttQoS.AT_MOST_ONCE, false, 0),
-					MqttMessageIdVariableHeader.from(dupPubRelMessageStore.getMessageId()), null);
-				channel.writeAndFlush(pubRelMessage);
-			});
+			if(dupPublishMessageStoreList!=null) {
+				dupPublishMessageStoreList.forEach(dupPublishMessageStore -> {
+					MqttPublishMessage publishMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
+						new MqttFixedHeader(MqttMessageType.PUBLISH, true, MqttQoS.valueOf(dupPublishMessageStore.getMqttQoS()), false, 0),
+						new MqttPublishVariableHeader(dupPublishMessageStore.getTopic(), dupPublishMessageStore.getMessageId()), Unpooled.buffer().writeBytes(dupPublishMessageStore.getMessageBytes()));
+					channel.writeAndFlush(publishMessage);
+				});
+			}
+			if(dupPubRelMessageStoreList!=null) {
+				dupPubRelMessageStoreList.forEach(dupPubRelMessageStore -> {
+					MqttMessage pubRelMessage = MqttMessageFactory.newMessage(
+						new MqttFixedHeader(MqttMessageType.PUBREL, true, MqttQoS.AT_MOST_ONCE, false, 0),
+						MqttMessageIdVariableHeader.from(dupPubRelMessageStore.getMessageId()), null);
+					channel.writeAndFlush(pubRelMessage);
+				});
+			}
 		}
 	}
 

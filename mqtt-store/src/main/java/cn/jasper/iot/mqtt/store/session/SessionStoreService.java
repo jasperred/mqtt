@@ -9,6 +9,7 @@ import cn.jasper.iot.mqtt.common.session.ISessionStoreService;
 import cn.jasper.iot.mqtt.common.session.SessionStore;
 import cn.jasper.iot.mqtt.common.subscripe.SubscribeStore;
 import cn.jasper.iot.mqtt.store.cache.CacheService;
+import cn.jasper.iot.mqtt.store.utils.StoreUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -30,7 +31,7 @@ public class SessionStoreService implements ISessionStoreService {
 
 	@Override
 	public void put(String clientId, SessionStore sessionStore) {
-		cacheService.put(CACHE_PRE + clientId, JSONObject.toJSONString(sessionStore));
+		cacheService.put(CACHE_PRE + clientId, JSONObject.toJSONString(StoreUtil.transPublishToMapBeta(sessionStore)));
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class SessionStoreService implements ISessionStoreService {
 
 	@Override
 	public SessionStore get(String clientId) {
-		return JSONObject.parseObject(cacheService.get(CACHE_PRE + clientId), SessionStore.class);
+		return StoreUtil.mapTransToPublishMsgBeta(JSONObject.parseObject(cacheService.get(CACHE_PRE + clientId), Map.class));
 	}
 
 	@Override

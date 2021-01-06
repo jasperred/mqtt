@@ -120,7 +120,10 @@ public class Publish {
 		DupPublishMessageStore dupPublishMessageStore = new DupPublishMessageStore().setClientId(subscribeStore.getClientId())
 				.setTopic(topic).setMqttQoS(respQoS.value()).setMessageBytes(messageBytes);
 		dupPublishMessageStoreService.put(subscribeStore.getClientId(), dupPublishMessageStore);
-		channelCache.find(sessionStoreService.get(subscribeStore.getClientId()).getChannelId()).writeAndFlush(publishMessage);
+		Channel channel = channelCache.find(sessionStoreService.get(subscribeStore.getClientId()).getChannelId());
+		if(channel!=null&&channel.isOpen()){
+			channel.writeAndFlush(publishMessage);
+		}
 	}
 
 	private void writeQoS0Message(String topic, byte[] messageBytes, boolean retain, boolean dup, SubscribeStore subscribeStore, MqttQoS respQoS) {
@@ -128,7 +131,11 @@ public class Publish {
 			new MqttFixedHeader(MqttMessageType.PUBLISH, dup, respQoS, retain, 0),
 			new MqttPublishVariableHeader(topic, 0), Unpooled.buffer().writeBytes(messageBytes));
 		LOGGER.debug("PUBLISH - clientId: {}, topic: {}, Qos: {}", subscribeStore.getClientId(), topic, respQoS.value());
-		channelCache.find(sessionStoreService.get(subscribeStore.getClientId()).getChannelId()).writeAndFlush(publishMessage);
+		Channel channel = channelCache.find(sessionStoreService.get(subscribeStore.getClientId()).getChannelId());
+		if(channel!=null&&channel.isOpen())
+		{
+			channel.writeAndFlush(publishMessage);
+		}
 	}
 
 	private void sendPubAckMessage(Channel channel, int messageId) {
@@ -136,6 +143,7 @@ public class Publish {
 			new MqttFixedHeader(MqttMessageType.PUBACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
 			MqttMessageIdVariableHeader.from(messageId), null);
 		channel.writeAndFlush(pubAckMessage);
+		LOGGER.debug("PUBACK - messageId: {}", messageId);
 	}
 
 	private void sendPubRecMessage(Channel channel, int messageId) {
@@ -143,6 +151,7 @@ public class Publish {
 			new MqttFixedHeader(MqttMessageType.PUBREC, false, MqttQoS.AT_MOST_ONCE, false, 0),
 			MqttMessageIdVariableHeader.from(messageId), null);
 		channel.writeAndFlush(pubRecMessage);
+		LOGGER.debug("PUBREC - messageId: {}", messageId);
 	}
 
 }

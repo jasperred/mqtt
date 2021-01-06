@@ -90,8 +90,22 @@ public interface CacheService {
     public List<String> search(String search);
 
     /**
+     * 返回符合条件的Key
+     * @param key
+     * @return
+     */
+    public List<String> searchKey(String key);
+
+    /**
      * 返回全部Value
      * @return
      */
     public Map<String, Map<String,String>> all(String pre);
+
+    /**
+     * 变量自增
+     * @param key
+     * @return
+     */
+    public long incr(String key);
 }

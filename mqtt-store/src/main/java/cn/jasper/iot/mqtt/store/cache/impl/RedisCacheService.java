@@ -11,10 +11,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -94,7 +91,27 @@ public class RedisCacheService implements CacheService {
     }
 
     @Override
+    public List<String> searchKey(String key) {
+        //必须传入条件
+        if(StringUtil.isNullOrEmpty(key)){
+            return null;
+        }
+        Set<String> rs = redisUtils.keysBySelect(key+"*");
+        List<String> rl = null;
+        if(rs!=null){
+            rl = new ArrayList<>();
+            rl.addAll(rs);
+        }
+        return rl;
+    }
+
+    @Override
     public Map<String, Map<String,String>> all(String pre) {
         return redisUtils.scan(pre);
+    }
+
+    @Override
+    public long incr(String key) {
+        return redisUtils.incr(key);
     }
 }

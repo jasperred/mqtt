@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * PubRel重发
+ */
 @Service
 public class DupPubRelMessageStoreService implements IDupPubRelMessageStoreService {
 

@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by cs on 2018
+ * Session序列化处理
  */
 public class StoreUtil {
 

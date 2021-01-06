@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Service
 @ConditionalOnProperty(name = {"spring.mqtt.broker.cache"},havingValue = "memory",matchIfMissing = true)
+@Deprecated
 public class MemerySessionStoreService implements ISessionStoreService {
 
 	private Map<String, SessionStore> sessionCache = new ConcurrentHashMap<String, SessionStore>();

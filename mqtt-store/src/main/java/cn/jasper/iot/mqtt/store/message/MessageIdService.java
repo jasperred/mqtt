@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by wizzer on 2018
+ * 消息ID操作
  */
 @Service
 public class MessageIdService implements IMessageIdService {

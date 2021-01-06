@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 保留消息操作
+ */
 @Service
 public class RetainMessageStoreService implements IRetainMessageStoreService {
 

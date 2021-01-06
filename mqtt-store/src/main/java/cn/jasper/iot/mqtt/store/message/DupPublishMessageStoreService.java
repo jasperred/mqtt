@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Publish重发
+ */
 @Service
 public class DupPublishMessageStoreService implements IDupPublishMessageStoreService {
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wizzer on 2018
+ * 无通配符订阅
  */
 @Service
 public class SubscribeNotWildcardCache {

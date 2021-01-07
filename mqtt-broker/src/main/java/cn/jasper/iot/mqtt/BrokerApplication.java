@@ -1,3 +1,5 @@
+package cn.jasper.iot.mqtt;
+
 import cn.jasper.iot.mqtt.config.BrokerProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;

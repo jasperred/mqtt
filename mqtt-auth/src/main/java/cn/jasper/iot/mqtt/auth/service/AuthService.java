@@ -24,8 +24,12 @@ public class AuthService implements IAuthService {
 
 	@Override
 	public boolean checkValid(String username, String password) {
-		if (StrUtil.isBlank(username)) return false;
-		if (StrUtil.isBlank(password)) return false;
+		if (StrUtil.isBlank(username)) {
+			return false;
+		}
+		if (StrUtil.isBlank(password)) {
+			return false;
+		}
 		RSA rsa = new RSA(privateKey, null);
 		String value = rsa.encryptBcd(username, KeyType.PrivateKey);
 		return value.equals(password) ? true : false;

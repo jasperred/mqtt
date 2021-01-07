@@ -9,14 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>mqtt-broker</artifactId>
     <packaging>jar</packaging>
+    <description>mqtt broker</description>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
     <!--依赖-->
     <dependencies>
         <dependency>
@@ -62,15 +58,21 @@
     </dependencies>
     <!--构建-->
     <build>
+        <finalName>${project.artifactId}</finalName>
         <!--插件-->
         <plugins>
             <!--编译器插件-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
+                <version>${spring-boot-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!--跳过测试阶段插件-->
             <plugin>

@@ -41,6 +41,8 @@ spring:
                                 max-idle: 10      # 连接池中的最大空闲连接
                                 min-idle: 5       # 连接池中的最小空闲连接
 logging:
+        file:
+                path: /mnt/logs
         level:
                 root: info
                 cn.jasper.iot.mqtt: debug

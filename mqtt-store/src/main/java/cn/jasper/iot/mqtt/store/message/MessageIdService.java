@@ -24,7 +24,7 @@ public class MessageIdService implements IMessageIdService {
 
     @Override
     public void releaseMessageId(int messageId) {
-
+        //释放报文ID，未实现
     }
 
     /**

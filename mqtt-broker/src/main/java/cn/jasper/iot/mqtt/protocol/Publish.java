@@ -88,6 +88,7 @@ public class Publish {
 	}
 
 	private void sendPublishMessage(String topic, MqttQoS mqttQoS, byte[] messageBytes, boolean retain, boolean dup) {
+		LOGGER.debug("Receive PUBLISH - topic: {}, Qos: {}, retain: {}, dup: {}, message: {}", topic, mqttQoS.value(), retain,dup,new String(messageBytes));
 		//将消息发布给订阅的客户端
 		List<SubscribeStore> subscribeStores = subscribeStoreService.search(topic);
 		if(subscribeStores==null||subscribeStores.size()==0){

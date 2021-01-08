@@ -33,6 +33,6 @@ public class PubComp {
 		LOGGER.debug("PUBCOMP - clientId: {}, messageId: {}", (String) channel.attr(AttributeKey.valueOf("clientId")).get(), messageId);
 		//丢弃已保存的状态
 		dupPubRelMessageStoreService.remove((String) channel.attr(AttributeKey.valueOf("clientId")).get(), variableHeader.messageId());
-		//messageIdService.releaseMessageId(messageId);
+		messageIdService.releaseMessageId(messageId);
 	}
 }
